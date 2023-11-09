@@ -1,11 +1,14 @@
+mod general;
 mod response;
 
 use std::fmt::Debug;
 
+use general::GeneralMoudle;
 use reqwest;
 use response::{ApiResponse, ApiSupportedChainsResponse, ChainSuppertedApiResponse};
-use serde::de::DeserializeOwned;
+use serde::{de::DeserializeOwned, Serialize};
 
+#[derive(Clone)]
 pub struct OkLink {
     client: reqwest::Client,
     api_key: String,
@@ -52,6 +55,8 @@ impl OkLinkBuilder {
     }
 }
 
+pub type Result<R> = std::result::Result<ApiResponse<R>, Box<dyn std::error::Error>>;
+
 impl OkLink {
     pub fn builder() -> OkLinkBuilder {
         Default::default()
@@ -61,10 +66,7 @@ impl OkLink {
         OkLinkBuilder::default().new_with_api_key(api_key).build()
     }
 
-    pub async fn get<R: Debug + DeserializeOwned>(
-        self,
-        api_url: String,
-    ) -> Result<ApiResponse<R>, Box<dyn std::error::Error>> {
+    pub async fn get<R: Debug + DeserializeOwned>(self, api_url: String) -> Result<R> {
         let result = self
             .client
             .get(api_url)
@@ -73,14 +75,36 @@ impl OkLink {
             .await?
             .json::<ApiResponse<R>>()
             .await?;
-        println!("{:?}", result);
+        log::info!("{:?}", result);
         Ok(result)
+    }
+
+    pub async fn get_with_query<Q: Serialize, R: Debug + DeserializeOwned>(
+        self,
+        api_url: String,
+        query: Q,
+    ) -> Result<R> {
+        let result = self
+            .client
+            .get(api_url)
+            .header("Ok-Access-Key", self.api_key)
+            .query(&query)
+            .send()
+            .await?
+            .json::<ApiResponse<R>>()
+            .await?;
+        log::info!("{:?}", result);
+        Ok(result)
+    }
+
+    pub fn general(self) -> GeneralMoudle {
+        GeneralMoudle::new(self)
     }
 
     pub async fn chain_supported_api(
         self,
         chain_short_name: impl Into<String>,
-    ) -> Result<ApiResponse<ChainSuppertedApiResponse>, Box<dyn std::error::Error>> {
+    ) -> Result<ChainSuppertedApiResponse> {
         let api_url = format!(
             "{}{}{}",
             self.base_url,
@@ -95,7 +119,7 @@ impl OkLink {
     pub async fn api_supported_chains(
         self,
         url: impl Into<String>,
-    ) -> Result<ApiResponse<ApiSupportedChainsResponse>, Box<dyn std::error::Error>> {
+    ) -> Result<ApiSupportedChainsResponse> {
         let api_url = format!(
             "{}{}{}",
             self.base_url,

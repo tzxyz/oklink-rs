@@ -26,3 +26,11 @@ pub struct ChainSuppertedApiResponse {
 pub struct ApiSupportedChainsResponse {
     pub api_supported_chains: Vec<String>,
 }
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PageResponse {
+    pub page: String,
+    pub limit: String,
+    pub totalPage: String,
+}
