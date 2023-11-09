@@ -20,3 +20,9 @@ pub struct ChainSuppertedApiResponse {
     pub chain_short_name: String,
     pub chain_supported_apis: Vec<String>,
 }
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ApiSupportedChainsResponse {
+    pub api_supported_chains: Vec<String>,
+}

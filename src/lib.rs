@@ -3,7 +3,7 @@ mod response;
 use std::fmt::Debug;
 
 use reqwest;
-use response::{ApiResponse, ChainSuppertedApiResponse};
+use response::{ApiResponse, ApiSupportedChainsResponse, ChainSuppertedApiResponse};
 use serde::de::DeserializeOwned;
 
 pub struct OkLink {
@@ -91,6 +91,21 @@ impl OkLink {
         let result = self.get::<ChainSuppertedApiResponse>(api_url).await?;
         Ok(result)
     }
+
+    pub async fn api_supported_chains(
+        self,
+        url: impl Into<String>,
+    ) -> Result<ApiResponse<ApiSupportedChainsResponse>, Box<dyn std::error::Error>> {
+        let api_url = format!(
+            "{}{}{}",
+            self.base_url,
+            "/api/v5/explorer/api-supported-chains?apiUrl=",
+            url.into()
+        );
+        println!("{}", api_url);
+        let result = self.get::<ApiSupportedChainsResponse>(api_url).await?;
+        Ok(result)
+    }
 }
 
 mod tests {
@@ -101,6 +116,17 @@ mod tests {
     async fn test_chain_supperted_api() {
         let result = OkLink::new("75b3c8ce-8270-4f2f-99c0-aca94106a215")
             .chain_supperted_api("TRON")
+            .await;
+        match result {
+            Ok(response) => println!("{:?}", response),
+            Err(e) => panic!("{:?}", e),
+        }
+    }
+
+    #[tokio::test]
+    async fn test_api_supperted_chains() {
+        let result = OkLink::new("75b3c8ce-8270-4f2f-99c0-aca94106a215")
+            .api_supported_chains("/api/v5/explorer/blockchain/info")
             .await;
         match result {
             Ok(response) => println!("{:?}", response),
