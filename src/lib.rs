@@ -77,7 +77,7 @@ impl OkLink {
         Ok(result)
     }
 
-    pub async fn chain_supperted_api(
+    pub async fn chain_supported_api(
         self,
         chain_short_name: impl Into<String>,
     ) -> Result<ApiResponse<ChainSuppertedApiResponse>, Box<dyn std::error::Error>> {
@@ -113,9 +113,9 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn test_chain_supperted_api() {
+    async fn test_chain_supported_api() {
         let result = OkLink::new("75b3c8ce-8270-4f2f-99c0-aca94106a215")
-            .chain_supperted_api("TRON")
+            .chain_supported_api("TRON")
             .await;
         match result {
             Ok(response) => println!("{:?}", response),
@@ -124,7 +124,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_api_supperted_chains() {
+    async fn test_api_supported_chains() {
         let result = OkLink::new("75b3c8ce-8270-4f2f-99c0-aca94106a215")
             .api_supported_chains("/api/v5/explorer/blockchain/info")
             .await;
