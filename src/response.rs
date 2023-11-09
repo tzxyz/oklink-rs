@@ -32,5 +32,5 @@ pub struct ApiSupportedChainsResponse {
 pub struct PageResponse {
     pub page: String,
     pub limit: String,
-    pub totalPage: String,
+    pub total_page: String,
 }
