@@ -75,4 +75,25 @@ mod tests {
             Err(e) => panic!("{:?}", e),
         }
     }
+
+    #[tokio::test]
+    async fn test_token_transaction_list_multi() {
+        let client = setup();
+        let request = TokenTransactionListMultiRequest {
+            chain_short_name: "TRON".into(),
+            token_contract_address: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t".into(),
+            start_block_height: 56322000.to_string(),
+            end_block_height: 56322911.to_string(),
+            ..Default::default()
+        };
+        let result = client
+            .general()
+            .token()
+            .token_transaction_list_multi(request)
+            .await;
+        match result {
+            Ok(response) => println!("{:?}", response),
+            Err(e) => panic!("{:?}", e),
+        }
+    }
 }

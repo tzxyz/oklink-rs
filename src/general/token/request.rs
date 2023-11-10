@@ -38,3 +38,14 @@ pub struct PriceMultiRequest {
     pub chain_short_name: Option<String>,
     pub token_contract_address: String,
 }
+
+#[derive(Debug, Default, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TokenTransactionListMultiRequest {
+    pub chain_short_name: String,
+    pub token_contract_address: String,
+    pub start_block_height: String,
+    pub end_block_height: String,
+    pub page: Option<String>,
+    pub limit: Option<String>,
+}

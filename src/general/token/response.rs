@@ -79,3 +79,28 @@ pub struct PriceMultiResponse {
     pub token_contract_address: String,
     pub price_abnormal: Vec<String>,
 }
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TokenTransactionListMultiInnerResponse {
+    pub tx_id: String,
+    pub block_hash: String,
+    pub height: String,
+    pub transaction_time: String,
+    pub from: String,
+    pub to: String,
+    pub is_to_contract: bool,
+    pub is_from_contract: bool,
+    pub amount: String,
+    pub token_contract_address: String,
+    pub state: Option<String>,
+    pub token_id: String,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TokenTransactionListMultiResponse {
+    #[serde(flatten)]
+    pub page: PageResponse,
+    pub transaction_list: Vec<TokenTransactionListMultiInnerResponse>,
+}

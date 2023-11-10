@@ -66,4 +66,22 @@ impl TokenMoudle {
             .await?;
         Ok(result)
     }
+
+    pub async fn token_transaction_list_multi(
+        self,
+        request: TokenTransactionListMultiRequest,
+    ) -> Result<TokenTransactionListMultiResponse> {
+        let api_url = format!(
+            "{}{}",
+            self.inner.base_url, "/api/v5/explorer/token/token-transaction-list-multi"
+        );
+        log::debug!("{}", api_url);
+        let result = self
+            .inner
+            .get_with_query::<TokenTransactionListMultiRequest, TokenTransactionListMultiResponse>(
+                api_url, request,
+            )
+            .await?;
+        Ok(result)
+    }
 }

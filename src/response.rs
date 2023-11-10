@@ -33,7 +33,7 @@ pub struct PageResponse {
     pub page: String,
     pub limit: String,
     pub total_page: String,
-    pub chain_full_name: String,
-    pub chain_short_name: String,
-    pub total_transfer: String,
+    pub chain_full_name: Option<String>,
+    pub chain_short_name: Option<String>,
+    pub total_transfer: Option<String>,
 }
