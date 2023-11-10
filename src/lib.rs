@@ -132,6 +132,26 @@ impl OkLink {
     }
 }
 
+#[macro_export]
+macro_rules! generate_api {
+    ($struct_name:ident, $($method_name:ident, $api_url:expr, $request_type:ty, $response_type:ty);*) => {
+        $(
+            impl $struct_name {
+                pub async fn $method_name(self, request: $request_type) -> crate::Result<$response_type> {
+                    let api_url = format!("{}{}", self.inner.base_url, $api_url);
+                    log::debug!("{}", api_url);
+                    let result = self
+                        .inner
+                        .get_with_query::<$request_type, $response_type>(api_url, request)
+                        .await?;
+                    Ok(result)
+                }
+            }
+        )*
+    };
+}
+
+#[cfg(test)]
 mod tests {
 
     use super::*;

@@ -1,59 +1,22 @@
 use crate::OkLink;
-use crate::Result;
-
-use super::request::*;
-use super::response::*;
 
 pub struct AddressModule {
-    inner: OkLink,
+    pub inner: OkLink,
 }
 
 impl AddressModule {
     pub fn new(oklink: OkLink) -> Self {
         Self { inner: oklink }
     }
-
-    pub async fn address_summary(
-        self,
-        request: AddressSummaryRequest,
-    ) -> Result<AddressSummaryResponse> {
-        let api_url = format!(
-            "{}{}",
-            self.inner.base_url, "/api/v5/explorer/address/address-summary"
-        );
-        log::debug!("{}", api_url);
-        let result = self
-            .inner
-            .get_with_query::<AddressSummaryRequest, AddressSummaryResponse>(api_url, request)
-            .await?;
-        Ok(result)
-    }
-
-    pub async fn information_evm(
-        self,
-        request: InformationEvmRequest,
-    ) -> Result<InformationEvmResponse> {
-        let api_url = format!(
-            "{}{}",
-            self.inner.base_url, "/api/v5/explorer/address/information-evm"
-        );
-        log::debug!("{}", api_url);
-        let result = self
-            .inner
-            .get_with_query::<InformationEvmRequest, InformationEvmResponse>(api_url, request)
-            .await?;
-        Ok(result)
-    }
 }
 
+#[cfg(test)]
 mod tests {
 
     use crate::general::address::request::*;
     use crate::*;
-    use tracing_subscriber;
 
     fn setup() -> OkLink {
-        tracing_subscriber::fmt().init();
         OkLink::new("75b3c8ce-8270-4f2f-99c0-aca94106a215")
     }
 

@@ -4,6 +4,7 @@ pub mod response;
 
 pub use api::*;
 
+#[cfg(test)]
 mod tests {
 
     use super::request::*;
