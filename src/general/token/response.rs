@@ -1,4 +1,4 @@
-use crate::response::PageResponse;
+use crate::response::{ApiBaseResponse, PageResponse};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -70,4 +70,12 @@ pub struct TransactionListResponse {
     #[serde(flatten)]
     pub page: PageResponse,
     pub transaction_list: Vec<TransactionListInnerResponse>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PriceMultiResponse {
+    pub last_price: String,
+    pub token_contract_address: String,
+    pub price_abnormal: Vec<String>,
 }

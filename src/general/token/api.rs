@@ -53,4 +53,17 @@ impl TokenMoudle {
             .await?;
         Ok(result)
     }
+
+    pub async fn price_multi(self, request: PriceMultiRequest) -> Result<PriceMultiResponse> {
+        let api_url = format!(
+            "{}{}",
+            self.inner.base_url, "/api/v5/explorer/tokenprice/price-multi"
+        );
+        log::debug!("{}", api_url);
+        let result = self
+            .inner
+            .get_with_query::<PriceMultiRequest, PriceMultiResponse>(api_url, request)
+            .await?;
+        Ok(result)
+    }
 }

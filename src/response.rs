@@ -4,7 +4,7 @@ use serde::Deserialize;
 pub struct ApiResponse<T> {
     #[serde(flatten)]
     pub base: ApiBaseResponse,
-    pub data: Vec<T>,
+    pub data: Option<Vec<T>>,
 }
 
 #[derive(Debug, Deserialize)]

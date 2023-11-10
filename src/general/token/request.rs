@@ -30,3 +30,11 @@ pub struct TransactionListRequest {
     pub page: Option<String>,
     pub limit: Option<String>,
 }
+
+#[derive(Debug, Default, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PriceMultiRequest {
+    pub chain_id: Option<String>,
+    pub chain_short_name: Option<String>,
+    pub token_contract_address: String,
+}
