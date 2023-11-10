@@ -1,8 +1,7 @@
-use crate::OkLink;
-
-use self::token::TokenMoudle;
-
 mod token;
+
+use crate::OkLink;
+use token::TokenMoudle;
 
 pub struct GeneralMoudle {
     inner: OkLink,
