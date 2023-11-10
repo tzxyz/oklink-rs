@@ -26,7 +26,7 @@ pub struct ApiSupportedChainsResponse {
 pub struct PageResponse {
     pub page: String,
     pub limit: String,
-    pub total_page: String,
+    pub total_page: Option<String>,
     pub chain_full_name: Option<String>,
     pub chain_short_name: Option<String>,
     pub total_transfer: Option<String>,
