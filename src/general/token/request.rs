@@ -19,3 +19,14 @@ pub struct PositionListRequest {
     pub page: Option<String>,
     pub limit: Option<String>,
 }
+
+#[derive(Debug, Default, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TransactionListRequest {
+    pub chain_short_name: String,
+    pub token_contract_address: String,
+    pub max_amount: Option<String>,
+    pub min_amount: Option<String>,
+    pub page: Option<String>,
+    pub limit: Option<String>,
+}

@@ -17,7 +17,7 @@ impl TokenMoudle {
             "{}{}",
             self.inner.base_url, "/api/v5/explorer/token/token-list"
         );
-        println!("{}", api_url);
+        log::debug!("{}", api_url);
         let result = self
             .inner
             .get_with_query::<TokenListRequest, TokenListResponse>(api_url, request)
@@ -30,10 +30,26 @@ impl TokenMoudle {
             "{}{}",
             self.inner.base_url, "/api/v5/explorer/token/position-list"
         );
-        println!("{}", api_url);
+        log::debug!("{}", api_url);
         let result = self
             .inner
             .get_with_query::<PositionListRequest, PositionListResponse>(api_url, request)
+            .await?;
+        Ok(result)
+    }
+
+    pub async fn transaction_list(
+        self,
+        request: TransactionListRequest,
+    ) -> Result<TransactionListResponse> {
+        let api_url = format!(
+            "{}{}",
+            self.inner.base_url, "/api/v5/explorer/token/transaction-list"
+        );
+        log::debug!("{}", api_url);
+        let result = self
+            .inner
+            .get_with_query::<TransactionListRequest, TransactionListResponse>(api_url, request)
             .await?;
         Ok(result)
     }

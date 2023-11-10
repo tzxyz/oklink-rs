@@ -52,4 +52,23 @@ mod tests {
             Err(e) => panic!("{:?}", e),
         }
     }
+
+    #[tokio::test]
+    async fn test_transaction_list() {
+        setup();
+        let request = TransactionListRequest {
+            chain_short_name: "TRON".into(),
+            token_contract_address: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t".into(),
+            ..Default::default()
+        };
+        let result = OkLink::new("75b3c8ce-8270-4f2f-99c0-aca94106a215")
+            .general()
+            .token()
+            .transaction_list(request)
+            .await;
+        match result {
+            Ok(response) => println!("{:?}", response),
+            Err(e) => panic!("{:?}", e),
+        }
+    }
 }

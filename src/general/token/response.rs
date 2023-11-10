@@ -43,3 +43,31 @@ pub struct PositionListResponse {
     pub page: PageResponse,
     pub position_list: Vec<PositionListInnerResponse>,
 }
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TransactionListInnerResponse {
+    pub txid: String,
+    pub block_hash: String,
+    pub height: String,
+    pub transaction_time: String,
+    pub from: String,
+    pub to: String,
+    pub is_to_contract: bool,
+    pub is_from_contract: bool,
+    pub amount: String,
+    pub transaction_symbol: String,
+    pub method_id: String,
+    pub token_contract_address: String,
+    pub protocol_type: String,
+    pub state: String,
+    pub token_id: String,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TransactionListResponse {
+    #[serde(flatten)]
+    pub page: PageResponse,
+    pub transaction_list: Vec<TransactionListInnerResponse>,
+}
