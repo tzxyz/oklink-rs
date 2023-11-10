@@ -3,11 +3,11 @@ use super::response::*;
 use crate::OkLink;
 use crate::Result;
 
-pub struct TokenMoudle {
+pub struct TokenModule {
     inner: OkLink,
 }
 
-impl TokenMoudle {
+impl TokenModule {
     pub fn new(inner: OkLink) -> Self {
         Self { inner: inner }
     }

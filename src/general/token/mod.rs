@@ -7,7 +7,6 @@ pub use api::*;
 mod tests {
 
     use super::request::*;
-    use super::response::*;
     use crate::*;
     use tracing_subscriber;
 

@@ -1,4 +1,4 @@
-use crate::response::{ApiBaseResponse, PageResponse};
+use crate::response::PageResponse;
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
