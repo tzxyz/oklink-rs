@@ -2,15 +2,9 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct ApiResponse<T> {
-    #[serde(flatten)]
-    pub base: ApiBaseResponse,
-    pub data: Option<Vec<T>>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct ApiBaseResponse {
     pub code: String,
     pub msg: String,
+    pub data: Option<Vec<T>>,
 }
 
 #[derive(Debug, Deserialize)]
