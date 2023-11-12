@@ -19,7 +19,12 @@ generate_api!(
     subscription_info,
     "/api/v5/explorer/management/subscription-info",
     (),
-    SubscriptionInfoResponse
+    SubscriptionInfoResponse;
+
+    top_calls,
+    "/api/v5/explorer/management/top-calls",
+    (),
+    TopCallsResponse
 );
 
 generate_api!(
@@ -44,6 +49,16 @@ mod tests {
     pub async fn test_subscription_info() {
         let client = setup();
         let result = client.management().subscription_info().await;
+        match result {
+            Ok(response) => println!("{:?}", response),
+            Err(e) => panic!("{:?}", e),
+        }
+    }
+
+    #[tokio::test]
+    pub async fn top_calls() {
+        let client = setup();
+        let result = client.management().top_calls().await;
         match result {
             Ok(response) => println!("{:?}", response),
             Err(e) => panic!("{:?}", e),
