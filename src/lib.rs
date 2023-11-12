@@ -1,9 +1,13 @@
+#![recursion_limit = "256"]
+
 mod general;
+mod management;
 mod response;
 
 use std::fmt::Debug;
 
 use general::GeneralMoudle;
+use management::ManagementModule;
 use reqwest;
 use response::{ApiResponse, ApiSupportedChainsResponse, ChainSuppertedApiResponse};
 use serde::{de::DeserializeOwned, Serialize};
@@ -101,6 +105,10 @@ impl OkLink {
         GeneralMoudle::new(self)
     }
 
+    pub fn management(self) -> ManagementModule {
+        ManagementModule::new(self)
+    }
+
     pub async fn chain_supported_api(
         self,
         chain_short_name: impl Into<String>,
@@ -134,6 +142,19 @@ impl OkLink {
 
 #[macro_export]
 macro_rules! generate_api {
+    ($struct_name:ident, $($method_name:ident, $api_url:expr, (), $response_type:ty);*) => {
+        $(
+            impl $struct_name {
+                pub async fn $method_name(self) -> crate::Result<$response_type> {
+                    let api_url = format!("{}{}", self.inner.base_url, $api_url);
+                    log::debug!("{}", api_url);
+                    let result = self.inner.get(api_url).await?;
+                    Ok(result)
+                }
+            }
+        )*
+    };
+
     ($struct_name:ident, $($method_name:ident, $api_url:expr, $request_type:ty, $response_type:ty);*) => {
         $(
             impl $struct_name {
