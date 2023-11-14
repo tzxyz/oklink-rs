@@ -1,12 +1,13 @@
-mod address;
-mod block;
-mod token;
+pub mod address;
+pub mod block;
+pub mod chain_info;
+pub mod token;
 
 use crate::OkLink;
 use address::AddressModule;
+use block::BlockModule;
+use chain_info::ChainInfoModule;
 use token::TokenModule;
-
-use self::block::BlockModule;
 
 pub struct GeneralMoudle {
     inner: OkLink,
@@ -17,6 +18,10 @@ impl GeneralMoudle {
         Self {
             inner: oklink.clone(),
         }
+    }
+
+    pub fn chain_info(self) -> ChainInfoModule {
+        ChainInfoModule::new(self.inner.clone())
     }
 
     pub fn block(self) -> BlockModule {
